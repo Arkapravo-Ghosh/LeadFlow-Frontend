@@ -5,7 +5,7 @@ import { RiCalendarLine } from "@remixicon/react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { TimePicker } from "@/components/time-picker";
-import { Field, FieldLabel } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Popover, PopoverContent, PopoverTitle, PopoverTrigger } from "@/components/ui/popover";
 import { calendarDate, calendarDateValue } from "@/lib/calendar-input";
 
@@ -20,13 +20,13 @@ export function DateTimePicker({ id, value, timezone, disabled, invalid, describ
   const [dateValue = "", timeValue = ""] = value.split("T");
   const selected = calendarDate(dateValue, timezone);
   const label = selected ? new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: timezone }).format(selected) : "Pick a date";
-  return <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+  return <FieldGroup className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
     <Field data-invalid={invalid}>
       <FieldLabel htmlFor={id}>Follow-up date</FieldLabel>
       <Popover open={open && !disabled} onOpenChange={setOpen}>
         <PopoverTrigger render={<Button id={id} type="button" variant="outline" disabled={disabled}
           aria-invalid={invalid} aria-describedby={describedBy} data-empty={!selected}
-          className="w-full justify-start text-left data-[empty=true]:text-muted-foreground" />}>
+          className="min-h-11 w-full justify-start text-left data-[empty=true]:text-muted-foreground" />}>
           <RiCalendarLine aria-hidden data-icon="inline-start" />{label}
         </PopoverTrigger>
         <PopoverContent align="start" className="max-h-(--available-height) w-auto max-w-[calc(100vw-2rem)] overflow-y-auto p-0 motion-reduce:animate-none">
@@ -41,5 +41,5 @@ export function DateTimePicker({ id, value, timezone, disabled, invalid, describ
     </Field>
     <TimePicker id={`${id}-time`} value={timeValue} disabled={disabled} invalid={invalid} describedBy={describedBy}
       onChange={time => onChange(`${dateValue}T${time}`)} />
-  </div>;
+  </FieldGroup>;
 }

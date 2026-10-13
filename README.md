@@ -86,6 +86,8 @@ adapter is provided. The provider IP header is trusted only when Vercel sets `VE
 - `src/components/date-time-picker.tsx`: Calendar/Popover/time composition;
   `src/components/time-picker.tsx` shares themed hour/minute/period selectors,
   and `src/lib/time-input.ts` converts display values to 24-hour wall time.
+  Date and time controls share a 44px row on tablet/desktop and stack on mobile;
+  segment labels remain accessible, with Hour/Minute hints in empty selectors.
   `src/lib/calendar-input.ts` preserves calendar days across browser timezones.
 - `src/lib/site-metadata.ts`: public metadata/structured data; `src/app/robots.ts`
   and `src/app/sitemap.ts` render crawl files.
