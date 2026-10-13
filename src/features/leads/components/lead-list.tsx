@@ -12,7 +12,7 @@ export function LeadList({ leads, now, timezone, filtered, onOpen }: Props) {
     <Empty className="border border-dashed">
       <EmptyHeader>
         <EmptyTitle>{filtered ? "No matching leads" : "Your next conversation starts here"}</EmptyTitle>
-        <EmptyDescription>{filtered ? "Try another name or status." : "Add your first lead to start tracking discussions and follow-ups."}</EmptyDescription>
+        <EmptyDescription>{filtered ? "Try another name, status, or follow-up filter." : "Add your first lead to start tracking discussions and follow-ups."}</EmptyDescription>
       </EmptyHeader>
     </Empty>
   );
