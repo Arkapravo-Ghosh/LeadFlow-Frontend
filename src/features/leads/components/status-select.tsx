@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { statuses } from "../status";
@@ -22,9 +23,9 @@ export function StatusSelect({ lead, onSaved }: { lead: Lead; onSaved: (lead: Le
   }
   return (
     <Field className="max-w-48" data-invalid={Boolean(error)}>
-      <FieldLabel htmlFor="lead-status">Status{pending && " · saving…"}</FieldLabel>
+      <FieldLabel htmlFor="lead-status">Status{pending && <><Spinner aria-hidden="true" /><span className="sr-only" role="status">Saving status</span></>}</FieldLabel>
       <Select items={statuses} value={lead.status} onValueChange={change} disabled={pending}>
-        <SelectTrigger id="lead-status" aria-invalid={Boolean(error)} className="w-full"><SelectValue /></SelectTrigger>
+        <SelectTrigger id="lead-status" aria-busy={pending} aria-invalid={Boolean(error)} className="w-full"><SelectValue /></SelectTrigger>
         <SelectContent alignItemWithTrigger={false}><SelectGroup>
           {statuses.map(item => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}
         </SelectGroup></SelectContent>

@@ -1,7 +1,11 @@
 import { Suspense } from "react";
+import { AuthShell } from "@/features/auth/components/auth-shell";
+import { AuthSkeleton } from "@/features/auth/components/auth-skeleton";
 import { AuthScreen } from "@/features/auth/server/auth-screen";
 
 export const metadata = { title: "Sign in · LeadFlow" };
 export default function LoginPage() {
-  return <Suspense fallback={<main className="p-8 text-sm text-muted-foreground">Loading sign-in…</main>}><AuthScreen mode="login" /></Suspense>;
+  return <AuthShell mode="login">
+    <Suspense fallback={<AuthSkeleton mode="login" />}><AuthScreen mode="login" /></Suspense>
+  </AuthShell>;
 }

@@ -21,7 +21,7 @@ export async function createLead(input: unknown): Promise<ActionResult<Lead>> {
     const lead = await apiRequest<Lead>("/leads", {
       method: "POST", body: JSON.stringify(parsed.data),
     });
-    revalidatePath("/");
+    revalidatePath("/workspace");
     return lead;
   });
 }
@@ -36,7 +36,7 @@ export async function changeStatus(
     const lead = await apiRequest<Lead>(`/leads/${id.data}`, {
       method: "PATCH", body: JSON.stringify({ status: value.data }),
     });
-    revalidatePath("/");
+    revalidatePath("/workspace");
     return lead;
   });
 }
@@ -73,7 +73,7 @@ export async function saveDiscussion(
     const saved = await apiRequest<DiscussionSaved>(`/leads/${leadId}/discussions`, {
       method: "POST", body: JSON.stringify({ note, follow_up_at: followUp }),
     });
-    revalidatePath("/");
+    revalidatePath("/workspace");
     return saved;
   });
 }

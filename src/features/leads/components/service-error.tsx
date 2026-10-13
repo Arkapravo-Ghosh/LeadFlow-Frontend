@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 
 export function ServiceError({ message }: { message: string }) {
@@ -15,8 +16,9 @@ export function ServiceError({ message }: { message: string }) {
         <AlertTitle>We couldn’t load your leads</AlertTitle>
         <AlertDescription>{message}</AlertDescription>
       </Alert>
-      <Button className="w-fit" disabled={pending}
+      <Button className="w-fit" disabled={pending} aria-busy={pending}
         onClick={() => startTransition(() => router.refresh())}>
+        {pending && <Spinner aria-hidden="true" data-icon="inline-start" />}
         {pending ? "Retrying…" : "Try again"}
       </Button>
     </main>

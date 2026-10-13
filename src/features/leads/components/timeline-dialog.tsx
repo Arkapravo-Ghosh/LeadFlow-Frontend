@@ -1,6 +1,7 @@
 import type { RefObject } from "react";
 import { DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { DiscussionTimeline } from "@/features/discussions/components/discussion-timeline";
@@ -27,10 +28,10 @@ export function TimelineDialog({ lead, timeline, loading, now, timezone, trigger
       <StatusSelect lead={lead} onSaved={onStatusSaved} />
       <Separator />
       <div className="min-h-16 shrink-0 pr-2 sm:flex-1 sm:shrink sm:overflow-y-auto" aria-busy={loading} data-testid="timeline-scroll">
-        {!timeline ? <div className="flex flex-col gap-4"><Skeleton className="h-16 w-full" /><Skeleton className="h-16 w-full" /></div>
+        {!timeline ? <div className="flex flex-col gap-4" role="status" aria-label="Loading discussions"><Spinner aria-hidden="true" /><div aria-hidden="true" className="flex flex-col gap-4"><Skeleton className="h-16 w-full" /><Skeleton className="h-16 w-full" /></div></div>
           : timeline.ok ? <DiscussionTimeline discussions={timeline.data.discussions} now={now} timezone={timezone} />
           : <div className="flex flex-col gap-4"><FormFeedback message={timeline.message} />
-            <Button variant="outline" disabled={loading} onClick={onRetry}>Retry discussions</Button></div>}
+            <Button variant="outline" disabled={loading} aria-busy={loading} onClick={onRetry}>{loading && <Spinner aria-hidden="true" data-icon="inline-start" />}Retry discussions</Button></div>}
       </div>
       {timeline?.ok && <><Separator /><DiscussionForm leadId={lead.id} timezone={timezone} onSaved={onSaved} /></>}
     </DialogContent>

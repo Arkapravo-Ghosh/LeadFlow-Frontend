@@ -9,6 +9,10 @@ Live app: [leadflow.arkapravo.in](https://leadflow.arkapravo.in). Vercel CI/CD d
 The Next.js interface for LeadFlow: create an account or sign in to your private workspace, create leads, search/filter them, record
 conversations, schedule follow-ups and change status on one screen. It preserves
 the configured shadcn preset and supports persistent light/dark mode.
+The public `/` landing page explains the workflow with clearly labeled example
+leads. The protected application lives at `/workspace`; registration and sign-in
+redirect there. Loading forms, leads and discussions use animated skeletons;
+pending actions use shared spinners with reduced-motion support.
 
 ## Run the complete app locally
 
@@ -62,11 +66,14 @@ adapter is provided. The provider IP header is trusted only when Vercel sets `VE
 
 ## Code structure and checks
 
-- `src/app`: workspace, login/sign-up pages, same-origin account handlers and health route.
+- `src/app`: public landing page, protected `/workspace`, login/sign-up pages, same-origin account handlers and health route.
+- `src/features/marketing`: landing composition, public copy and illustrative workspace preview.
 - `src/features/auth`: shared account form, validation, server-rendered auth screen and sign-out control.
 - `src/features/leads`: lead components, validation, filters and server actions.
 - `src/features/discussions`: timeline, discussion form and follow-up input.
-- `src/components/ui`: reusable shadcn primitives.
+- `src/components/ui`: reusable shadcn primitives, including skeleton and spinner.
+- `src/components/brand-*`: shared logo and home link. `public/leadflow-logo.svg`
+  is the vector artwork; `src/app/favicon.ico` contains matching 16/32/48px images.
 - `src/lib/server`: authenticated private API client, session cookies, origin checks and configuration.
 - `src/lib/api-types.ts`: generated OpenAPI contract; regenerate from the parent checkout.
 

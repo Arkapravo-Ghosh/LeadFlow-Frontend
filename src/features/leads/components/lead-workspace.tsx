@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useTransition } from "react";
-import { RiArrowRightUpLine } from "@remixicon/react";
+import { WorkspaceHeader } from "./workspace-header";
 import { Dialog } from "@/components/ui/dialog";
 import { SignOutButton } from "@/features/auth/components/sign-out-button";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -56,15 +56,7 @@ export function LeadWorkspace({ data }: { data: LeadListData }) {
 
   return (
     <div className="min-h-dvh bg-background text-foreground">
-      <header className="border-b border-border">
-        <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-6 sm:px-8">
-          <div className="flex items-center gap-3">
-            <RiArrowRightUpLine className="size-6 text-primary" aria-hidden />
-            <span className="text-lg font-semibold tracking-tight">LeadFlow</span>
-          </div>
-          <div className="flex items-center gap-3"><ThemeToggle /><AddLeadDialog /><SignOutButton /></div>
-        </div>
-      </header>
+      <WorkspaceHeader><ThemeToggle /><AddLeadDialog /><SignOutButton /></WorkspaceHeader>
       <main className="mx-auto flex max-w-5xl flex-col gap-8 px-5 py-10 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-semibold tracking-tight sm:text-4xl">Keep the conversation moving.</h1>

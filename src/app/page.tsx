@@ -1,7 +1,11 @@
-import { Suspense } from "react";
-import { Workspace } from "@/features/leads/server/workspace";
-import { WorkspaceSkeleton } from "@/features/leads/components/workspace-skeleton";
+import type { Metadata } from "next";
+import { LandingPage } from "@/features/marketing/components/landing-page";
+
+export const metadata: Metadata = {
+  title: "LeadFlow | Leads, conversations and follow-ups",
+  description: "Keep your leads, discussion history and follow-up dates together. Create a private LeadFlow workspace and make your next step clear.",
+};
 
 export default function Home() {
-  return <Suspense fallback={<WorkspaceSkeleton />}><Workspace /></Suspense>;
+  return <LandingPage />;
 }

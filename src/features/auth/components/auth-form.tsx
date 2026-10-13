@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
+import { Spinner } from "@/components/ui/spinner";
+import { PASSWORD_HINT, USERNAME_HINT } from "../form-copy";
 import { Input } from "@/components/ui/input";
 import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { loginSchema, signupSchema, type AuthMode } from "../schemas";
@@ -29,13 +31,12 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
         body: JSON.stringify(data.data),
       });
       const result: { message?: string } = await response.json();
-      if (!response.ok) { setError(result.message ?? "Unable to access your account."); return; }
+      if (!response.ok) { setError(result.message ?? "Unable to access your account."); setPending(false); return; }
       form.reset();
       // A new document clears any prior user's router cache and client state.
-      window.location.replace("/");
+      window.location.replace("/workspace");
     } catch {
       setError("Account access is temporarily unavailable. Please try again.");
-    } finally {
       setPending(false);
     }
   }
@@ -45,18 +46,18 @@ export function AuthForm({ mode }: { mode: AuthMode }) {
       <Input id="username" name="username" autoComplete="username" autoCapitalize="none"
         spellCheck={false} required minLength={3} maxLength={64} disabled={pending}
         aria-describedby={signup ? "username-hint" : undefined} />
-      {signup && <FieldDescription id="username-hint">3–64 letters, numbers, dots, underscores or hyphens. Start with a letter or number.</FieldDescription>}
+      {signup && <FieldDescription id="username-hint">{USERNAME_HINT}</FieldDescription>}
     </Field>
     <Field><FieldLabel htmlFor="password">Password</FieldLabel>
       <Input id="password" name="password" type="password" autoComplete={signup ? "new-password" : "current-password"}
         required minLength={signup ? 12 : 1} maxLength={128} disabled={pending}
         aria-describedby={signup ? "password-hint" : undefined} />
-      {signup && <FieldDescription id="password-hint">Use a unique password with 12–128 characters.</FieldDescription>}
+      {signup && <FieldDescription id="password-hint">{PASSWORD_HINT}</FieldDescription>}
     </Field>
     {signup && <Field><FieldLabel htmlFor="confirmation">Confirm password</FieldLabel>
       <Input id="confirmation" name="confirmation" type="password" autoComplete="new-password"
         required maxLength={128} disabled={pending} /></Field>}
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-    <Button type="submit" disabled={pending}>{pending ? (signup ? "Creating account…" : "Signing in…") : (signup ? "Create account" : "Sign in")}</Button>
+    <Button type="submit" disabled={pending} aria-busy={pending}>{pending && <Spinner aria-hidden="true" data-icon="inline-start" />}{pending ? (signup ? "Creating account…" : "Signing in…") : (signup ? "Create account" : "Sign in")}</Button>
   </form>;
 }

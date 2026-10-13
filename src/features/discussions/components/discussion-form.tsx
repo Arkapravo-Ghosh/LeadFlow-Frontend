@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Textarea } from "@/components/ui/textarea";
@@ -33,7 +34,7 @@ export function DiscussionForm({ leadId, timezone, onSaved }: {
     });
   }
   return (
-    <form onSubmit={submit} className="flex shrink-0 flex-col gap-5">
+    <form onSubmit={submit} aria-busy={pending} className="flex shrink-0 flex-col gap-5">
       <FieldGroup className="gap-4">
         <Field data-invalid={Boolean(errors.note)}>
           <FieldLabel htmlFor="discussion-note">Log a discussion</FieldLabel>
@@ -48,7 +49,7 @@ export function DiscussionForm({ leadId, timezone, onSaved }: {
       <FormFeedback message={message} />
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="text-xs text-muted-foreground">Notes without a date keep your existing follow-up.</p>
-        <Button type="submit" disabled={pending}>{pending ? "Saving…" : "Save Note"}</Button>
+        <Button type="submit" disabled={pending} aria-busy={pending}>{pending && <Spinner aria-hidden="true" data-icon="inline-start" />}{pending ? "Saving…" : "Save Note"}</Button>
       </div>
     </form>
   );

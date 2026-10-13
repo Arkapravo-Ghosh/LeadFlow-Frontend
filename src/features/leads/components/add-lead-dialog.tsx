@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { RiAddLine } from "@remixicon/react";
+import { Spinner } from "@/components/ui/spinner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter,
   DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -41,7 +42,7 @@ export function AddLeadDialog() {
           <DialogTitle>Add new lead</DialogTitle>
           <DialogDescription>A name is all you need. Every new lead starts with New status.</DialogDescription>
         </DialogHeader>
-        <form onSubmit={submit} className="flex flex-col gap-6">
+        <form onSubmit={submit} aria-busy={pending} className="flex flex-col gap-6">
           <FieldGroup>
             {(["name", "company", "phone"] as const).map(key =>
               <TextField key={key} id={`add-${key}`}
@@ -55,7 +56,7 @@ export function AddLeadDialog() {
           <FormFeedback message={message} />
           <DialogFooter>
             <DialogClose render={<Button variant="outline" type="button" disabled={pending} />}>Cancel</DialogClose>
-            <Button type="submit" disabled={pending}>{pending ? "Saving…" : "Save Lead"}</Button>
+            <Button type="submit" disabled={pending} aria-busy={pending}>{pending && <Spinner aria-hidden="true" data-icon="inline-start" />}{pending ? "Saving…" : "Save Lead"}</Button>
           </DialogFooter>
         </form>
       </DialogContent>
