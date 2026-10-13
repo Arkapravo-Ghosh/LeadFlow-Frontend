@@ -10,11 +10,12 @@ export function WorkspaceSkeleton() {
       <main className="mx-auto flex max-w-5xl flex-col gap-8 px-5 py-10 sm:px-8 sm:py-12">
         <div className="flex flex-col gap-2"><Skeleton className="h-10 w-full max-w-lg" /><Skeleton className="h-5 w-full max-w-sm" /></div>
         <div className="flex flex-col gap-6 border-y border-border py-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <Skeleton className="h-10 w-full sm:max-w-sm" />
-            <div className="flex w-full flex-col gap-3 sm:w-48"><Skeleton className="h-5 max-w-20" /><Skeleton className="h-10" /></div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:flex lg:items-end lg:justify-between">
+            <Skeleton className="h-10 w-full sm:col-span-2 lg:max-w-sm" />
+            <div className="flex flex-col gap-3 lg:w-48"><Skeleton className="h-5 max-w-20" /><Skeleton className="h-11" /></div>
+            <div className="flex flex-col gap-3 lg:hidden"><Skeleton className="h-5 max-w-20" /><Skeleton className="h-11" /></div>
           </div>
-          <div className="flex flex-wrap gap-3">{[1, 2, 3, 4, 5, 6, 7].map(item => <Skeleton key={item} className="h-9 w-20" />)}</div>
+          <div className="hidden flex-wrap gap-3 lg:flex">{[1, 2, 3, 4, 5, 6, 7].map(item => <Skeleton key={item} className="h-9 w-20" />)}</div>
         </div>
         <Skeleton className="h-4 w-40" />
         {[1, 2, 3].map(item => <div key={item} className="flex flex-col gap-4 border border-border p-5">

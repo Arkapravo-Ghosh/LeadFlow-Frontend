@@ -38,7 +38,7 @@ export function AddLeadDialog() {
     <Dialog open={open} onOpenChange={value => { if (!pending) setOpen(value); }}>
       <DialogTrigger render={<Button />}><RiAddLine data-icon="inline-start" />Add New Lead</DialogTrigger>
       <DialogContent className="max-h-[90dvh] overflow-y-auto">
-        <DialogHeader>
+        <DialogHeader className="pr-7">
           <DialogTitle>Add new lead</DialogTitle>
           <DialogDescription>A name is all you need. Every new lead starts with New status.</DialogDescription>
         </DialogHeader>

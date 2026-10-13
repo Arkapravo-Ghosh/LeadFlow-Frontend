@@ -13,5 +13,5 @@ export const statusSchema = z.enum([
 export const discussionSchema = z.object({
   leadId: idSchema,
   note: z.string().trim().min(1, "Write a discussion note.").max(5000),
-  followUpLocal: z.string().max(16).optional(),
+  followUpLocal: z.string().max(16).regex(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/, "Choose a follow-up date and time.").optional(),
 }).strict();

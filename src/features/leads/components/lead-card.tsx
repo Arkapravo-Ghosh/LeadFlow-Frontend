@@ -22,10 +22,10 @@ export function LeadCard({ lead, now, timezone, onOpen }: Props) {
         "group flex w-full flex-col gap-4 border border-border bg-card p-5 text-left transition-colors hover:bg-accent/40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring sm:p-6",
         lead.is_today && "border-primary/40",
       )}>
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0">
-          <h3 className="truncate text-base font-semibold">{lead.name}</h3>
-          {lead.company && <p className="mt-1 truncate text-sm text-muted-foreground">{lead.company}</p>}
+      <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:gap-4">
+        <div className="min-w-0 w-full sm:flex-1">
+          <h3 className="break-words text-base font-semibold sm:truncate">{lead.name}</h3>
+          {lead.company && <p className="mt-1 break-words text-sm text-muted-foreground sm:truncate">{lead.company}</p>}
         </div>
         <div className="flex shrink-0 items-center gap-3">
           <StatusBadge status={lead.status} />
@@ -33,7 +33,7 @@ export function LeadCard({ lead, now, timezone, onOpen }: Props) {
         </div>
       </div>
       <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
-        <p className="line-clamp-2 min-w-0 text-sm text-muted-foreground">
+        <p className="line-clamp-2 min-w-0 break-words text-sm text-muted-foreground">
           {lead.last_note ?? "No discussions yet. Start the conversation."}
         </p>
         <span className="shrink-0 text-xs text-muted-foreground">

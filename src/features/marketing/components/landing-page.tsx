@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BrandLink } from "@/components/brand-link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { features, steps } from "../content";
 import { WorkspacePreview } from "./workspace-preview";
 
@@ -12,9 +13,9 @@ export function LandingPage() {
     <header className="border-b border-border">
       <nav aria-label="Main navigation" className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-5 py-5 sm:px-8">
         <BrandLink />
-        <div className="flex items-center gap-3">
-          <ThemeToggle /><Link href="/login" className={buttonVariants({ variant: "ghost", size: "sm" })}>Sign in</Link>
-          <Link href="/signup" className={buttonVariants({ size: "sm" })}>Create account</Link>
+        <div className="flex w-full items-center justify-between gap-2 sm:w-auto sm:justify-start sm:gap-3">
+          <ThemeToggle /><Link href="/login" className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "px-2 sm:px-4")}>Sign in</Link>
+          <Link href="/signup" className={cn(buttonVariants({ size: "sm" }), "px-3 sm:px-4")}>Create account</Link>
         </div>
       </nav>
     </header>
@@ -22,9 +23,9 @@ export function LandingPage() {
       <section aria-labelledby="intro-title" className="grid items-center gap-12 py-16 sm:py-24 lg:grid-cols-[1.05fr_1fr] lg:gap-16">
         <div className="flex flex-col items-start gap-7">
           <p className="text-xs font-semibold tracking-widest text-primary uppercase">Less searching. More following through.</p>
-          <h1 id="intro-title" className="max-w-xl text-5xl leading-[1.06] font-semibold tracking-tight sm:text-6xl">Every lead.<br />Every conversation.<br /><span className="text-primary">One clear next step.</span></h1>
+          <h1 id="intro-title" className="max-w-xl text-[clamp(2rem,10vw,3rem)] leading-[1.06] font-semibold tracking-tight sm:text-6xl">Every lead.<br />Every conversation.<br /><span className="text-primary">One clear next step.</span></h1>
           <p className="max-w-md text-base leading-relaxed text-muted-foreground">LeadFlow keeps your leads, discussion history and follow-up dates together, so you can get back to the right person with the right context.</p>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap">
             <Link href="/signup" className={buttonVariants({ size: "lg" })}>Create your account</Link>
             <Link href="#how-it-works" className={buttonVariants({ variant: "outline", size: "lg" })}>See how it works</Link>
           </div>

@@ -6,7 +6,7 @@ export function WorkspaceHeader({ children }: { children: ReactNode }) {
   return <header className="border-b border-border">
     <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-4 px-5 py-6 sm:px-8">
       <BrandLink />
-      <div className="flex items-center gap-3">{children}</div>
+      <div className="flex w-full items-center justify-between gap-3 sm:w-auto sm:justify-start">{children}</div>
     </div>
   </header>;
 }

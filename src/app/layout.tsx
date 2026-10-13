@@ -3,6 +3,7 @@ import { Geist, Geist_Mono, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
+import { siteMetadata } from "@/lib/site-metadata";
 
 const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
@@ -16,11 +17,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL || "http://localhost:3000"),
-  title: "LeadFlow | Lead management",
-  description: "Track leads, log discussions, and keep every follow-up in view.",
-};
+export const metadata: Metadata = siteMetadata();
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

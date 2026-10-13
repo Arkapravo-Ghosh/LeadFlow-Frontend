@@ -13,6 +13,16 @@ The public `/` landing page explains the workflow with clearly labeled example
 leads. The protected application lives at `/workspace`; registration and sign-in
 redirect there. Loading forms, leads and discussions use animated skeletons;
 pending actions use shared spinners with reduced-motion support.
+Follow-ups use a themed shadcn calendar/popover plus a time field. Calendar days
+use the configured timezone even when the browser is in another zone.
+Mobile/tablet filters use full-width status selectors; desktop status buttons
+wrap when needed. CSS switches the presentation without resetting filter state.
+
+The public page includes canonical, Open Graph/Twitter metadata and structured
+data. `/sitemap.xml` lists only the landing page; `/robots.txt` excludes account,
+workspace and API paths. The social thumbnail uses the owner's dark landing PNG.
+Set `APP_URL` during build and runtime; see the parent's
+[SEO guide](https://github.com/Arkapravo-Ghosh/LeadFlow/blob/main/docs/seo.md).
 
 ## Run the complete app locally
 
@@ -72,6 +82,10 @@ adapter is provided. The provider IP header is trusted only when Vercel sets `VE
 - `src/features/leads`: lead components, validation, filters and server actions.
 - `src/features/discussions`: timeline, discussion form and follow-up input.
 - `src/components/ui`: reusable shadcn primitives, including skeleton and spinner.
+- `src/components/date-time-picker.tsx`: Calendar/Popover/time composition;
+  `src/lib/calendar-input.ts` preserves calendar days across browser timezones.
+- `src/lib/site-metadata.ts`: public metadata/structured data; `src/app/robots.ts`
+  and `src/app/sitemap.ts` render crawl files.
 - `src/components/brand-*`: shared logo and home link. `public/leadflow-logo.svg`
   is the vector artwork; `src/app/favicon.ico` contains matching 16/32/48px images.
 - `src/lib/server`: authenticated private API client, session cookies, origin checks and configuration.

@@ -1,6 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
+import { DateTimePicker } from "@/components/date-time-picker";
 
 type Props = {
   enabled: boolean; value: string; timezone: string; error?: string; disabled: boolean;
@@ -15,12 +15,10 @@ export function FollowUpFields({ enabled, value, timezone, error, disabled, onEn
         <FieldLabel htmlFor="schedule-followup">Set a follow-up</FieldLabel>
       </Field>
       {enabled && <Field data-invalid={Boolean(error)}>
-        <FieldLabel htmlFor="followup-local">Follow-up date & time</FieldLabel>
-        <Input id="followup-local" type="datetime-local" value={value} required
-          disabled={disabled} aria-invalid={Boolean(error)}
-          aria-describedby="followup-help" onChange={event => onChange(event.target.value)} />
+        <DateTimePicker id="followup-local" value={value} timezone={timezone} disabled={disabled}
+          invalid={Boolean(error)} describedBy={error ? "followup-help followup-error" : "followup-help"} onChange={onChange} />
         <FieldDescription id="followup-help">Scheduled in {timezone}. Past dates appear as overdue.</FieldDescription>
-        {error && <FieldError>{error}</FieldError>}
+        {error && <FieldError id="followup-error">{error}</FieldError>}
       </Field>}
     </>
   );

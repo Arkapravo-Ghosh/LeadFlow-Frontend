@@ -64,7 +64,7 @@ export function LeadWorkspace({ data }: { data: LeadListData }) {
         </div>
         <LeadToolbar search={search} status={status} followup={followup}
           onSearch={setSearch} onStatus={setStatus} onFollowup={setFollowup} />
-        <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground" aria-live="polite">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground" aria-live="polite">
           <span>{visible.length} {visible.length === 1 ? "lead" : "leads"}{search || status !== "all" || followup !== "all" ? " matching your filters" : " in your workspace"}</span>
           <span>{data.timezone}</span>
         </div>
