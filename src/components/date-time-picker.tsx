@@ -4,7 +4,7 @@ import { useState } from "react";
 import { RiCalendarLine } from "@remixicon/react";
 import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { TimePicker } from "@/components/time-picker";
 import { Field, FieldLabel } from "@/components/ui/field";
 import { Popover, PopoverContent, PopoverTitle, PopoverTrigger } from "@/components/ui/popover";
 import { calendarDate, calendarDateValue } from "@/lib/calendar-input";
@@ -14,13 +14,13 @@ type Props = {
   describedBy: string; onChange: (value: string) => void;
 };
 
-/** Compose shadcn's date picker with a time input; emit local wall time for the server. */
+/** Compose themed date/time pickers; emit local wall time for the server. */
 export function DateTimePicker({ id, value, timezone, disabled, invalid, describedBy, onChange }: Props) {
   const [open, setOpen] = useState(false);
   const [dateValue = "", timeValue = ""] = value.split("T");
   const selected = calendarDate(dateValue, timezone);
   const label = selected ? new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: timezone }).format(selected) : "Pick a date";
-  return <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-[1fr_9rem]">
+  return <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
     <Field data-invalid={invalid}>
       <FieldLabel htmlFor={id}>Follow-up date</FieldLabel>
       <Popover open={open && !disabled} onOpenChange={setOpen}>
@@ -39,11 +39,7 @@ export function DateTimePicker({ id, value, timezone, disabled, invalid, describ
         </PopoverContent>
       </Popover>
     </Field>
-    <Field data-invalid={invalid}>
-      <FieldLabel htmlFor={`${id}-time`}>Follow-up time</FieldLabel>
-      <Input id={`${id}-time`} type="time" step={60} value={timeValue} required disabled={disabled}
-        aria-invalid={invalid} aria-describedby={describedBy} className="min-w-0"
-        onChange={event => onChange(`${dateValue}T${event.target.value}`)} />
-    </Field>
+    <TimePicker id={`${id}-time`} value={timeValue} disabled={disabled} invalid={invalid} describedBy={describedBy}
+      onChange={time => onChange(`${dateValue}T${time}`)} />
   </div>;
 }

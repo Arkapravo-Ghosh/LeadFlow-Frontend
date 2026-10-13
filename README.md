@@ -13,7 +13,8 @@ The public `/` landing page explains the workflow with clearly labeled example
 leads. The protected application lives at `/workspace`; registration and sign-in
 redirect there. Loading forms, leads and discussions use animated skeletons;
 pending actions use shared spinners with reduced-motion support.
-Follow-ups use a themed shadcn calendar/popover plus a time field. Calendar days
+Follow-ups use a themed shadcn calendar/popover plus hour, minute and AM/PM
+Selects, with no native date/time popup. Calendar days
 use the configured timezone even when the browser is in another zone.
 Mobile/tablet filters use full-width status selectors; desktop status buttons
 wrap when needed. CSS switches the presentation without resetting filter state.
@@ -83,6 +84,8 @@ adapter is provided. The provider IP header is trusted only when Vercel sets `VE
 - `src/features/discussions`: timeline, discussion form and follow-up input.
 - `src/components/ui`: reusable shadcn primitives, including skeleton and spinner.
 - `src/components/date-time-picker.tsx`: Calendar/Popover/time composition;
+  `src/components/time-picker.tsx` shares themed hour/minute/period selectors,
+  and `src/lib/time-input.ts` converts display values to 24-hour wall time.
   `src/lib/calendar-input.ts` preserves calendar days across browser timezones.
 - `src/lib/site-metadata.ts`: public metadata/structured data; `src/app/robots.ts`
   and `src/app/sitemap.ts` render crawl files.
