@@ -22,12 +22,16 @@ export async function apiRequest<T>(
   const url = new URL(`/api/v1${path}`, apiUrl);
   url.searchParams.set("timezone", timezone);
   let response: Response;
+  const headers = new Headers(init.headers);
+  headers.set("Content-Type", "application/json");
+  headers.set("X-API-Key", apiKey);
+  // A caller's headers may add internal metadata, never replace credentials.
+  if (token) headers.set("Authorization", `Bearer ${token}`);
+  else headers.delete("Authorization");
   try {
     response = await fetch(url, {
       ...init, cache: "no-store", signal: AbortSignal.timeout(15000),
-      headers: { "Content-Type": "application/json", "X-API-Key": apiKey,
-        ...(token ? { Authorization: `Bearer ${token}` } : {}),
-      },
+      headers,
     });
   } catch {
     throw new ApiError("LeadFlow is temporarily unavailable. Please try again.");

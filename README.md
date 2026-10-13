@@ -4,7 +4,9 @@
 [LeadFlow parent](https://github.com/Arkapravo-Ghosh/LeadFlow) ·
 [Backend repository](https://github.com/Arkapravo-Ghosh/LeadFlow-Backend)
 
-The Next.js interface for LeadFlow: sign in to your private workspace, create leads, search/filter them, record
+Live app: [leadflow.arkapravo.in](https://leadflow.arkapravo.in). Vercel CI/CD deploys this repository.
+
+The Next.js interface for LeadFlow: create an account or sign in to your private workspace, create leads, search/filter them, record
 conversations, schedule follow-ups and change status on one screen. It preserves
 the configured shadcn preset and supports persistent light/dark mode.
 
@@ -22,8 +24,10 @@ docker compose up --build --watch
 
 Open `http://localhost:3000`, or the configured `FRONTEND_PORT`. Only Next.js has a
 host port. Compose supplies this application's environment variables automatically.
-Create an account through `docker compose exec backend uv run leadflow-create-user`,
-then sign in at `/login`. No default credentials are embedded in the UI.
+Open `/signup` or choose **Create account** on `/login`. New users enter a username,
+a 12–128 character password and confirmation, then go straight to an empty private
+workspace. Existing users sign in at `/login`. The administrator account CLI stays
+available in the backend. No default credentials are embedded in the UI.
 
 ## Deploy this repository to Vercel
 
@@ -45,16 +49,21 @@ Set the following server environment variables, also listed in [.env.example](.e
 SSR, Server Actions and authentication Route Handlers call FastAPI through `server-only` modules. No backend URL,
 credential or database connection is sent to browser code. Environment variables
 must not have a `NEXT_PUBLIC_` prefix. Sessions use an HTTP-only SameSite cookie;
-HTTPS production sets Secure. Login/logout require the exact `APP_URL` origin,
+HTTPS production sets Secure. Sign-up/login/logout require the exact `APP_URL` origin,
 so set it for each deployment (including previews).
 
 See the parent's [deployment guide](https://github.com/Arkapravo-Ghosh/LeadFlow/blob/main/docs/deployment.md)
-for the full Render/Neon/Vercel setup and domain configuration.
+for the full Render/Neon/Vercel setup and domain configuration. In production,
+`APP_URL` is `https://leadflow.arkapravo.in` and the server-only `BACKEND_API_URL`
+is `https://api.leadflow.arkapravo.in`. No source edit is needed to change domains.
+Registration forwards a hash of Vercel’s client IP for the backend rate limit;
+other hosting environments share a registration bucket until a trusted source
+adapter is provided. The provider IP header is trusted only when Vercel sets `VERCEL=1`.
 
 ## Code structure and checks
 
-- `src/app`: workspace/login pages, same-origin login/logout handlers and health route.
-- `src/features/auth`: login form and sign-out control.
+- `src/app`: workspace, login/sign-up pages, same-origin account handlers and health route.
+- `src/features/auth`: shared account form, validation, server-rendered auth screen and sign-out control.
 - `src/features/leads`: lead components, validation, filters and server actions.
 - `src/features/discussions`: timeline, discussion form and follow-up input.
 - `src/components/ui`: reusable shadcn primitives.
