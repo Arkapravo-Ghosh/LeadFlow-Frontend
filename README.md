@@ -4,7 +4,7 @@
 [LeadFlow parent](https://github.com/Arkapravo-Ghosh/LeadFlow) ·
 [Backend repository](https://github.com/Arkapravo-Ghosh/LeadFlow-Backend)
 
-The Next.js interface for LeadFlow: create leads, search/filter them, record
+The Next.js interface for LeadFlow: sign in to your private workspace, create leads, search/filter them, record
 conversations, schedule follow-ups and change status on one screen. It preserves
 the configured shadcn preset and supports persistent light/dark mode.
 
@@ -22,6 +22,8 @@ docker compose up --build --watch
 
 Open `http://localhost:3000`, or the configured `FRONTEND_PORT`. Only Next.js has a
 host port. Compose supplies this application's environment variables automatically.
+Create an account through `docker compose exec backend uv run leadflow-create-user`,
+then sign in at `/login`. No default credentials are embedded in the UI.
 
 ## Deploy this repository to Vercel
 
@@ -36,20 +38,23 @@ Set the following server environment variables, also listed in [.env.example](.e
 | `APP_TIMEZONE` | Display/input timezone, e.g. `Asia/Kolkata` |
 | `APP_URL` | Public frontend origin, including your configured domain |
 
-SSR and Server Actions call FastAPI through `server-only` modules. No backend URL,
+SSR, Server Actions and authentication Route Handlers call FastAPI through `server-only` modules. No backend URL,
 credential or database connection is sent to browser code. Environment variables
-must not have a `NEXT_PUBLIC_` prefix.
+must not have a `NEXT_PUBLIC_` prefix. Sessions use an HTTP-only SameSite cookie;
+HTTPS production sets Secure. Login/logout require the exact `APP_URL` origin,
+so set it for each deployment (including previews).
 
 See the parent's [deployment guide](https://github.com/Arkapravo-Ghosh/LeadFlow/blob/main/docs/deployment.md)
 for the full Render/Neon/Vercel setup and domain configuration.
 
 ## Code structure and checks
 
-- `src/app`: page, layout and health route.
+- `src/app`: workspace/login pages, same-origin login/logout handlers and health route.
+- `src/features/auth`: login form and sign-out control.
 - `src/features/leads`: lead components, validation, filters and server actions.
 - `src/features/discussions`: timeline, discussion form and follow-up input.
 - `src/components/ui`: reusable shadcn primitives.
-- `src/lib/server`: private API client and server configuration.
+- `src/lib/server`: authenticated private API client, session cookies, origin checks and configuration.
 - `src/lib/api-types.ts`: generated OpenAPI contract; regenerate from the parent checkout.
 
 ```sh
