@@ -29,6 +29,10 @@ then sign in at `/login`. No default credentials are embedded in the UI.
 
 Import [LeadFlow-Frontend](https://github.com/Arkapravo-Ghosh/LeadFlow-Frontend),
 select Next.js and Node 24, install with `npm ci`, and build with `npm run build`.
+The Node type definitions match Node 24 and Vitest’s peer requirements. Commit
+the lockfile with dependency changes. `npm run typecheck` generates Next.js route
+types first, so it also works in a clean checkout.
+
 Set the following server environment variables, also listed in [.env.example](.env.example):
 
 | Variable | Purpose |
